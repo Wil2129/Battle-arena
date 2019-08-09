@@ -7,7 +7,7 @@ const path = require('path');
 
 const outdoor = require('./room/public').outdoor;
 
-const port = process.env.PORT || 2567;
+const port = Number(process.env.PORT || 2567);
 const app = express()
 
 const server = http.createServer(app);
@@ -19,7 +19,7 @@ gameServer.register('outdoor', outdoor);
 /* register @colyseus/social routes
 app.use("/", socialRoutes);*/
 
-app.use(express.static(path.join(__dirname, "./../client/public")));
+app.use("/", express.static(path.join(__dirname, "./../client/public")));
 
 // register colyseus monitor AFTER registering your room handlers
 app.use("/colyseus", monitor(gameServer));
