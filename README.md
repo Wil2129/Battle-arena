@@ -55,6 +55,7 @@ To know your IP address in the network. this link may help you. :point_right: [F
 
 ## Who is behind this
 Three brightful minds namely:
-[Arnol Fokam](https://github.com/ArnolFokam/) - Jhttps://github.com/ArnolFokam/S Ninja
-[Teddy Baha](https://github.com/Wil2129) - Firebase Samurai
-[Alex Jordan](https://github.com/alexjordan05) - Graphics Sensei 
+
+ [Arnol Fokam](https://github.com/ArnolFokam/) - JS Ninja and cold blooded Game architect.  
+ [Teddy Baha](https://github.com/Wil2129) - Firebase Samurai and Ace critical thinker.  
+ [Alex Jordan](https://github.com/alexjordan05) - Graphics Sensei and Gamer in the Soul.  
