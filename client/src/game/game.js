@@ -11,27 +11,18 @@ import * as Colyseus from "colyseus.js";
 
 var gameConfig = require('./../../config.json');
 
+//const endpoint = (window.location.hostname === "localhost") ? `ws://localhost:${gameConfig.serverDevPort}` : `${window.location.protocol.replace("http", "ws")}//${window.location.hostname}:${gameConfig.serverDevPort}` 
+        
+
+//for heroku remote deployment...to run it locally comment the code below and uncomment the code at the top
+const endpoint = (window.location.protocole === "https") ? `ws://${gameConfig.herokuRemoteUrl}` : `wss://${gameConfig.herokuRemoteUrl}`
+
+var client = new Colyseus.Client(endpoint);
+
+
 export default class Game extends Phaser.Scene {
     constructor() {
         super("Game");
-
-        let endpoint;
-
-
-        //for heroku remote deployment...to run it locally comment the code below and uncomment the code at the top
-        if (window.location.protocol === "http") {
-            endpoint = `ws://${gameConfig.herokuRemoteUrl}`
-        } else if (window.location.protocol === "https") {
-            endpoint = `wss://${gameConfig.herokuRemoteUrl}`
-        }
-
-        /**
-        const endpoint = (window.location.hostname === "localhost") ? `ws://localhost:${gameConfig.serverDevPort}` // development (local)
-        :
-    `   ${window.location.protocol.replace("http", "ws")}//${window.location.hostname}:${gameConfig.serverDevPort}` // production (remote local)
-        **/
-
-        var client = new Colyseus.Client(endpoint);
 
     }
 

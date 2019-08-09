@@ -7,8 +7,8 @@
   	"start": "npm run deploy",
     "deploy": "cd server && pm2 start index.js -i max",
     "start:server": "node server/index.js",
-    "start:client": "cd client && webpack-dev-server --config webpack/base.js --hot-reload --watch",
-    "build:client": "webpack --config webpack/prod.js ",
+    "start:wepback": "cd client && webpack-dev-server --config webpack/base.js --hot-reload --watch",
+    "build": "webpack --config webpack/prod.js ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "UNLICENSED",
