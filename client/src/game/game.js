@@ -11,11 +11,11 @@ import * as Colyseus from "colyseus.js";
 
 var gameConfig = require('./../../config.json');
 
-//const endpoint = (window.location.hostname === "localhost") ? `ws://localhost:${gameConfig.serverDevPort}` : `${window.location.protocol.replace("http", "ws")}//${window.location.hostname}:${gameConfig.serverDevPort}` 
+const endpoint = (window.location.hostname === "localhost") ? `ws://localhost:${gameConfig.serverDevPort}` : `${window.location.protocol.replace("http", "ws")}//${window.location.hostname}:${gameConfig.serverDevPort}` 
         
 
-//for heroku remote deployment...to run it locally comment the code below and uncomment the code at the top
-const endpoint = (window.location.protocol === "http:") ? `ws://${gameConfig.herokuRemoteUrl}` : `wss://${gameConfig.herokuRemoteUrl}`
+/*for heroku remote deployment...to run it locally comment the code below and uncomment the code at the top
+const endpoint = (window.location.protocol === "http:") ? `ws://${gameConfig.herokuRemoteUrl}` : `wss://${gameConfig.herokuRemoteUrl}`*/
 
 var client = new Colyseus.Client(endpoint);
 
