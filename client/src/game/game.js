@@ -15,7 +15,7 @@ var gameConfig = require('./../../config.json');
         
 
 //for heroku remote deployment...to run it locally comment the code below and uncomment the code at the top
-const endpoint = (window.location.protocole === "http:") ? `ws://${gameConfig.herokuRemoteUrl}` : `wss://${gameConfig.herokuRemoteUrl}`
+const endpoint = (window.location.protocol === "http:") ? `ws://${gameConfig.herokuRemoteUrl}` : `wss://${gameConfig.herokuRemoteUrl}`
 
 var client = new Colyseus.Client(endpoint);
 
