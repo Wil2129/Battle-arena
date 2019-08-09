@@ -7,7 +7,7 @@ Battle royale game for the real ones. Built with Phaser 3 and Colyseus, Battle a
 * The sound, image assets from the game are all from various internet sources (All Open Source)
 * The map of the game has been drawn using Tiled Map Editor - a powerful tool to draw game maps.
 
-## What we already implemented
+## What we have already implemented
 * The display of the map on the game.
 * The mouvement of the player and its rotation according to the position of the mouse even while moving.
 * The connection between the client and the server which permits us to:
