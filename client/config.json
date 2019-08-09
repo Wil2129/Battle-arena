@@ -1,0 +1,7 @@
+{
+    "webpackDevPort": 8080,
+    "serverDevPort": 2567,
+    "herokuRemoteUrl": null,
+    "herokuLocalPort": 5000,
+    "herokuRemoteUrl": "warm-crag-43766.herokuapp.com"
+}
