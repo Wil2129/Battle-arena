@@ -6,13 +6,16 @@ import outdoor from "./../assets/tilemaps/battle-royale1.json";
 import outdoorImage from "./../assets/tilemaps/battle-royale.png";
 import bulletImage from "./../assets/bullet.png";
 import cursorImage from "./../assets/cursor.cur";
+import bulletSound from "./../assets/sound/bulletSound.mp3";
+import backgroundMusic1 from "./../assets/sound/backgroundMusic1.mp3";
+import backgroundMusic2 from "./../assets/sound/backgroundMusic2.mp3";
 //import fireSound from "./../assets/sound/"
 import * as Colyseus from "colyseus.js";
 
 var gameConfig = require('./../../config.json');
 
-const endpoint = (window.location.hostname === "localhost") ? `ws://localhost:${gameConfig.serverDevPort}` : `${window.location.protocol.replace("http", "ws")}//${window.location.hostname}:${gameConfig.serverDevPort}` 
-        
+const endpoint = (window.location.hostname === "localhost") ? `ws://localhost:${gameConfig.serverDevPort}` : `${window.location.protocol.replace("http", "ws")}//${window.location.hostname}:${gameConfig.serverDevPort}`
+
 
 /*for heroku remote deployment...to run it locally comment the code below and uncomment the code at the top
 const endpoint = (window.location.protocol === "http:") ? `ws://${gameConfig.herokuRemoteUrl}` : `wss://${gameConfig.herokuRemoteUrl}`*/
@@ -35,12 +38,16 @@ export default class Game extends Phaser.Scene {
         this.bullets = {};
         this.score = 0;
         this.map;
+        this.bulletSound = null;
+        this.backgroundMusic = null;
 
         this.closingMessage = "You have been disconnected from the server";
 
     }
 
     preload() {
+        this.load.audio('bulletSound', [bulletSound]);
+        this.load.audio('backgroundMusic', [backgroundMusic1, backgroundMusic2]);
         this.load.image("tiles", outdoorImage);
         this.load.tilemapTiledJSON("map", outdoor);
         this.load.image('player', playerImage);
@@ -48,6 +55,14 @@ export default class Game extends Phaser.Scene {
     }
 
     create() {
+
+        this.backgroundMusic = this.sound.add('backgroundMusic');
+        this.backgroundMusic.setLoop(true).play();
+
+        this.bulletSound = this.sound.add('bulletSound');
+
+        console.log(this.backgroundMusic);
+
         this.input.setDefaultCursor(`url('${cursorImage}'), crosshair`);
         this.cursor = this.input.keyboard.createCursorKeys();
         this.map = this.make.tilemap({
@@ -116,7 +131,7 @@ export default class Game extends Phaser.Scene {
                 //to prevent the player from recieving a message when he is the new player added
                 if (sessionId != this.room.sessionId) {
                     // If you want to track changes on a child object inside a map, this is a common pattern:
-                    player.onChange = function(changes) {
+                    player.onChange = function (changes) {
                         changes.forEach(change => {
                             if (change.field == "rotation") {
                                 self.players[sessionId].sprite.target_rotation = change.value;
@@ -135,7 +150,7 @@ export default class Game extends Phaser.Scene {
                 self.bullets[bullet.index] = self.physics.add.sprite(bullet.x, bullet.y, 'bullet').setRotation(bullet.angle);
 
                 // If you want to track changes on a child object inside a map, this is a common pattern:
-                bullet.onChange = function(changes) {
+                bullet.onChange = function (changes) {
                     changes.forEach(change => {
                         if (change.field == "x") {
                             self.bullets[bullet.index].x = change.value;
@@ -147,13 +162,13 @@ export default class Game extends Phaser.Scene {
 
             }
 
-            this.room.state.bullets.onRemove = function(bullet, sessionId) {
+            this.room.state.bullets.onRemove = function (bullet, sessionId) {
                 self.removeBullet(bullet.index);
             }
 
 
 
-            this.room.state.players.onRemove = function(player, sessionId) {
+            this.room.state.players.onRemove = function (player, sessionId) {
                 //if the player removed (maybe killed) is not this player
                 if (sessionId !== self.room.sessionId) {
                     self.removePlayer(sessionId);
@@ -240,12 +255,14 @@ export default class Game extends Phaser.Scene {
                 this.player.sprite.setVelocityY(300);
             }
 
-            this.input.on('pointermove', function(pointer) {
+            this.input.on('pointermove', function (pointer) {
                 this.rotatePlayer(pointer);
             }, this);
 
-            this.input.on('pointerdown', function(pointer) {
+            this.input.on('pointerdown', function (pointer) {
                 if (!this.shot) {
+                    bulletSound.play();
+
                     let speed_x = Math.cos(this.player.sprite.rotation + Math.PI / 2) * 50;
                     let speed_y = Math.sin(this.player.sprite.rotation + Math.PI / 2) * 50;
 

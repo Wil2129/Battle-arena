@@ -4,20 +4,19 @@
   "description": "npm init template for bootstraping an empty Colyseus project",
   "main": "index.js",
   "scripts": {
-  	"start": "npm run deploy",
+    "start": "npm run deploy",
     "deploy": "cd server && pm2 start index.js -i max",
     "start:server": "node server/index.js",
     "start:wepback": "cd client && webpack-dev-server --config webpack/base.js --hot-reload --watch",
     "build": "webpack --config webpack/prod.js ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": ""
   },
   "homepage": "",
   "author": "",
-  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
