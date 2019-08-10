@@ -9,7 +9,6 @@ import cursorImage from "./../assets/cursor.cur";
 import bulletSound from "./../assets/sound/bulletSound.mp3";
 import backgroundMusic1 from "./../assets/sound/backgroundMusic1.mp3";
 import backgroundMusic2 from "./../assets/sound/backgroundMusic2.mp3";
-//import fireSound from "./../assets/sound/"
 import * as Colyseus from "colyseus.js";
 
 var gameConfig = require('./../../config.json');
@@ -46,7 +45,7 @@ export default class Game extends Phaser.Scene {
     }
 
     preload() {
-        this.load.audio('bulletSound', [bulletSound]);
+        this.load.audio('bulletSound', bulletSound);
         this.load.audio('backgroundMusic', [backgroundMusic1, backgroundMusic2]);
         this.load.image("tiles", outdoorImage);
         this.load.tilemapTiledJSON("map", outdoor);
@@ -61,10 +60,7 @@ export default class Game extends Phaser.Scene {
 
         this.bulletSound = this.sound.add('bulletSound');
 
-        console.log(this.backgroundMusic);
-
         this.input.setDefaultCursor(`url('${cursorImage}'), crosshair`);
-        this.cursor = this.input.keyboard.createCursorKeys();
         this.map = this.make.tilemap({
             key: "map"
         });
@@ -224,6 +220,7 @@ export default class Game extends Phaser.Scene {
     }
 
     update() {
+
         for (let id in this.players) {
             let p = this.players[id].sprite;
             p.x += ((p.target_x || p.x) - p.x) * 0.5;
@@ -261,7 +258,7 @@ export default class Game extends Phaser.Scene {
 
             this.input.on('pointerdown', function (pointer) {
                 if (!this.shot) {
-                    bulletSound.play();
+                    this.bulletSound.play();
 
                     let speed_x = Math.cos(this.player.sprite.rotation + Math.PI / 2) * 50;
                     let speed_y = Math.sin(this.player.sprite.rotation + Math.PI / 2) * 50;
